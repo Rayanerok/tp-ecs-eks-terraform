@@ -1,0 +1,23 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.38"
+    }
+  }
+}
+
+provider "aws" {
+  region  = "us-east-1"
+  profile = "academy"
+}
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "minikube"
+}
