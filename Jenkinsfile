@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        TF_STATE = '/var/lib/jenkins/terraform-state/terraform.tfstate'
+        AWS_PROFILE = 'academy'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -24,7 +29,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                sh 'terraform plan -state=$TF_STATE -out=tfplan'
             }
         }
 
@@ -36,7 +41,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve tfplan'
+                sh 'terraform apply -state=$TF_STATE -auto-approve tfplan'
             }
         }
     }
@@ -47,4 +52,3 @@ pipeline {
         }
     }
 }
-
